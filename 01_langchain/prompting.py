@@ -85,6 +85,6 @@ def main():
     structured_output_prompting()
 
 
-# uv run python  -m 01_langchain.streaming_output
+# uv run python  -m 01_langchain.prompting
 if __name__ == '__main__':
     main()
