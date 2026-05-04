@@ -85,6 +85,6 @@ def main():
     # call_init_chat_model = abstraction + flexibility
     # direct_model_initialization = control + specificity
 
-# uv run python  -m 01_langchain.models_initialization_ways
+# uv run python  -m project_langchain.models_initialization_ways
 if __name__ == '__main__':
     main()

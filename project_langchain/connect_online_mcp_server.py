@@ -46,7 +46,7 @@ async def connect_online_mcp():
 
     pprint(response)
 
-# uv run python  -m 01_langchain.connect_online_mcp_server
+# uv run python  -m project_langchain.connect_online_mcp_server
 if __name__ == '__main__':
     asyncio.run(connect_online_mcp())
 

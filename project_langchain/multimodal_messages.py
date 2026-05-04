@@ -17,7 +17,7 @@ def main():
 
 
     # Read the image file
-    with open("01_langchain/resources/moon.png", "rb") as f:
+    with open("project_langchain/resources/moon.png", "rb") as f:
         img_bytes = f.read()
 
     # Base64 encode
@@ -36,7 +36,7 @@ def main():
 
 
 
-# uv run  -m 01_langchain.multimodal_messages
+# uv run  -m project_langchain.multimodal_messages
 if __name__ == '__main__':
     main()
 

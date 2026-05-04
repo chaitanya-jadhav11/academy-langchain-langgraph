@@ -56,6 +56,6 @@ def prompt():
     You may also ask clarifying questions to the user to better understand their question.
     """
 
-# uv run -m 01_langchain.resources.mcp_server
+# uv run -m project_langchain.resources.mcp_server
 if __name__ == "__main__":
     mcp.run(transport="stdio")

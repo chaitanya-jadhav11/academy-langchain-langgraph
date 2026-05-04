@@ -14,7 +14,7 @@ client = MultiServerMCPClient(
         "local_server": {
                 "transport": "stdio",
                 "command": "uv",
-                "args": ["run", "-m", "01_langchain.resources.mcp_server"],
+                "args": ["run", "-m", "project_langchain.resources.mcp_server"],
             }
     }
 )
@@ -56,7 +56,7 @@ async def connect_local_mcp():
     )
     pprint(response)
 
-# uv run python  -m 01_langchain.connect_local_mcp_server
+# uv run python  -m project_langchain.connect_local_mcp_server
 if __name__ == '__main__':
     asyncio.run(connect_local_mcp())
 

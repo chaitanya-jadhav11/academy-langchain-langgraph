@@ -36,7 +36,7 @@ def main():
     memory_test()
 
 
-# uv run  -m 01_langchain.memory
+# uv run  -m project_langchain.memory
 if __name__ == '__main__':
     main()
 

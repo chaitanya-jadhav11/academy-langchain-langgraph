@@ -42,6 +42,6 @@ def main():
     use_context_in_agent()
 
 
-# uv run -m 01_langchain.runtime_context
+# uv run -m project_langchain.runtime_context
 if __name__ == "__main__":
    main()

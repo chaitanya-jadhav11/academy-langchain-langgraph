@@ -55,6 +55,6 @@ def main():
     pprint(response)
 
 
-# uv run python  -m 01_langchain.langchain_multi_agent
+# uv run python  -m project_langchain.langchain_multi_agent
 if __name__ == '__main__':
     main()

@@ -38,7 +38,7 @@ def main():
     tool_call_function()
 
 
-# uv run python  -m 01_langchain.tools
+# uv run python  -m project_langchain.tools
 if __name__ == '__main__':
     main()
 

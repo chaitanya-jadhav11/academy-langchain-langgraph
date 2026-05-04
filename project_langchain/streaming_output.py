@@ -54,6 +54,6 @@ def main():
     stream_output()
 
 
-# uv run python  -m 01_langchain.streaming_output
+# uv run python  -m project_langchain.streaming_output
 if __name__ == '__main__':
     main()

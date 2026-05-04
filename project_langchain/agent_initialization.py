@@ -72,6 +72,6 @@ def main():
     create_first_agent()
 
 
-# uv run python  -m 01_langchain.agent_initialization
+# uv run python  -m project_langchain.agent_initialization
 if __name__ == '__main__':
     main()
