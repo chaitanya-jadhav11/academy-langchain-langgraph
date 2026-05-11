@@ -5,17 +5,20 @@ from dotenv import load_dotenv
 from langchain_core.messages import SystemMessage, HumanMessage
 from langchain_core.runnables import RunnableConfig
 from langchain_openai import ChatOpenAI
-from langgraph.checkpoint.memory import MemorySaver
+#from langgraph.checkpoint.memory import MemorySaver
+
 from langgraph.constants import START, END
 from langgraph.graph import MessagesState, StateGraph
 from langgraph.store.base import BaseStore
-from langgraph.store.memory import InMemoryStore
+#from langgraph.store.memory import InMemoryStore
+from db.db import store, checkpointer, init_db
 
 
 load_dotenv(override=True)
-in_memory_store = InMemoryStore()
+#in_memory_store = InMemoryStore()
 # Initialize the LLM
 model = ChatOpenAI(model="gpt-4o", temperature=0)
+init_db()
 
 
 # Chatbot instruction
@@ -81,7 +84,7 @@ def write_memory(state: MessagesState, config: RunnableConfig):
     user_id = config["configurable"]["user_id"]
     # Retrieve existing memory from the store
     namespace = ("memory", user_id)
-    existing_memory = in_memory_store.get(namespace, "user_memory")
+    existing_memory = store.get(namespace, "user_memory")
 
     # Extract the memory
     if existing_memory:
@@ -97,7 +100,7 @@ def write_memory(state: MessagesState, config: RunnableConfig):
     # Overwrite the existing memory in the store
     key = "user_memory"
     # Write value as a dictionary with a memory key
-    in_memory_store.put(namespace, key, {"memory": new_memory.content})
+    store.put(namespace, key, {"memory": new_memory.content})
 
 def build_graph():
     # Define the graph
@@ -112,10 +115,10 @@ def build_graph():
     #across_thread_memory = InMemoryStore()
 
     # Checkpointer for short-term (within-thread) memory
-    within_thread_memory = MemorySaver()
+    #within_thread_memory = MemorySaver()
 
     # Compile the graph with the checkpointer fir and store
-    graph = builder.compile(checkpointer=within_thread_memory, store=in_memory_store)
+    graph = builder.compile(checkpointer=checkpointer, store=store)
 
     graph.get_graph(xray=1).print_ascii()
     #graph.get_graph(xray=1).draw_mermaid_png(
@@ -131,9 +134,9 @@ def test_memory_example():
     random_key = str(uuid.uuid4())
     value = {"food_preference": "I like pizza"}
 
-    in_memory_store.put(namespace_for_memory, random_key, value)
+    store.put(namespace_for_memory, random_key, value)
 
-    memories_with_namespace = in_memory_store.search(namespace_for_memory)
+    memories_with_namespace = store.search(namespace_for_memory)
     print(f" memories_with_namespace {memories_with_namespace}")
     print(f"( memories_with_namespace type {type(memories_with_namespace)}")
     for item in memories_with_namespace:
@@ -143,7 +146,7 @@ def test_memory_example():
 
     # Get the memory by namespace and key
     print("-----------Get the memory by namespace and key")
-    memory_by_key = in_memory_store.get(namespace_for_memory, random_key)
+    memory_by_key = store.get(namespace_for_memory, random_key)
     print(f"Key: {memory_by_key.key}, Value: {memory_by_key.value}")
     # Output
     # Key: dd9b30a4-ea0c-4788-9e3b-54aa4c0539dc, Value: {'food_preference': 'I like pizza'}
@@ -164,7 +167,7 @@ def print_user_memory(config):
     user_id = config["configurable"]["user_id"]
     # Retrieve existing memory from the store
     namespace = ("memory", user_id)
-    existing_memory = in_memory_store.get(namespace, "user_memory")
+    existing_memory = store.get(namespace, "user_memory")
 
     # Extract the memory
     if existing_memory:
